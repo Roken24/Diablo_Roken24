@@ -2,21 +2,22 @@
 using UnityEditor;
 using System.IO;
 
-public class TestSaveSprite
+public class SaveSprite
 {
-    [MenuItem("Tools/导出精灵")]
-    static void SaveSprite()
+    [MenuItem("Tools/SaveSprite")]
+    static void BeginSaveSprite()
     {
-        string resourcesPath = "Assets/Game/Resources/";
+        string resourcesPath = "Assets/Game/Resources/";//存入Resources路径
         string cur_outPath = "Texture/Atlas/";
         bool isSuccessSaved = false;
         foreach (Object obj in Selection.objects)
         {
+            //选择图片的绝对路径，我的是"Assets/Game/Resources/Texture/Atlas/testUI.png"
             string selectionPath = AssetDatabase.GetAssetPath(obj);
             // 必须最上级是"Assets/Game/Resources/Texture/DiabloUITexture"
             if (selectionPath.StartsWith(resourcesPath))
             {
-                string selectionExt = System.IO.Path.GetExtension(selectionPath);
+                string selectionExt = System.IO.Path.GetExtension(selectionPath);//拿到文件后缀.png
                 if (selectionExt.Length == 0)
                 {
                     continue;
