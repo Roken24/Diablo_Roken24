@@ -18,7 +18,7 @@ public class CreatTableClass
     public static void CreatNewClass(string fileName, DataRowCollection TableData, int columnNum)
     {
         string FileName = "Tab_" + fileName;
-        string FilePath = "Assets/Game/Script/TableScript/" + FileName + ".cs";
+        string FilePath = ExcelConfig.TableClassPath + FileName + ".cs";
         StringBuilder sbCode = new StringBuilder();
         sbCode.AppendLine("using System.Collections;");
         sbCode.AppendLine("using System.Collections.Generic;");
@@ -30,7 +30,15 @@ public class CreatTableClass
         {
             string VariableName = TableData[0][i].ToString();
             string VariableType = TableData[1][i].ToString();
-            sbCode.AppendLine("    public " + VariableType + " " + VariableName + ";");
+            switch (VariableType)
+            {
+                case "INT":
+                    sbCode.AppendLine("    public int " + VariableName + ";");
+                    break;
+                case "STRING":
+                    sbCode.AppendLine("    public string " + VariableName + ";");
+                    break;
+            }           
         }
         sbCode.AppendLine("}");
         File.WriteAllText(FilePath, sbCode.ToString());
@@ -87,7 +95,7 @@ public class CreatTableClass
         {
             string VariableName = TableData[0][j].ToString();
             string VariableType = TableData[1][j].ToString();
-            if (VariableType == "int")
+            if (VariableType == "INT")
             {
                 sbCode.AppendLine("            " + fileName + "." + VariableName + " = int.Parse(collect[i][" + j + "].ToString());");
             }
