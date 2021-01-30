@@ -5,60 +5,93 @@ using System.Data;
  
 public class TableManager
 {
-    static Dictionary<int, Tab_Item> ItemDic = null;
-    public static Dictionary<int, Tab_Item> CreatItemArrayWithExcel()
+    static Dictionary<int, Tab_Tasks> TasksDic = null;
+    public static Dictionary<int, Tab_Tasks> CreatTasksArrayWithExcel()
     {
-        if (ItemDic != null) return ItemDic;
-        ItemDic = new Dictionary<int, Tab_Item>();
-        string filePath = ExcelConfig.excelsFolderPath + "Item.xlsx";
+        if (TasksDic != null) return TasksDic;
+        TasksDic = new Dictionary<int, Tab_Tasks>();
+        string filePath = ExcelConfig.excelsFolderPath + "Tasks.xlsx";
         int columnNum = 0, rowNum = 0;
         DataRowCollection collect = CreatTableClass.ReadExcel(filePath, ref columnNum, ref rowNum);
-        Tab_Item[] array = new Tab_Item[rowNum - 4];
+        Tab_Tasks[] array = new Tab_Tasks[rowNum - 4];
         for (int i = 4; i < rowNum; i++)
         {
-            Tab_Item Item = new Tab_Item();
-            Item.Id = int.Parse(collect[i][0].ToString());
-            Item.Name = collect[i][1].ToString();
-            Item.Price = int.Parse(collect[i][2].ToString());
-            ItemDic.Add(Item.Id, Item);
+            Tab_Tasks Tasks = new Tab_Tasks();
+            Tasks.Id = int.Parse(collect[i][0].ToString());
+            Tasks.Name = collect[i][1].ToString();
+            Tasks.Act = int.Parse(collect[i][2].ToString());
+            Tasks.Scene = int.Parse(collect[i][3].ToString());
+            Tasks.Text = collect[i][4].ToString();
+            Tasks.Passed = collect[i][5].ToString();
+            TasksDic.Add(Tasks.Id, Tasks);
         }
-        return ItemDic;
+        return TasksDic;
     }
   
-    public static Tab_Item GetItemById(int id)
+    public static Tab_Tasks GetTasksById(int id)
     {
-        Tab_Item ret = null;
-        var ItemDic = CreatItemArrayWithExcel();
-        ItemDic.TryGetValue(id, out ret);
+        Tab_Tasks ret = null;
+        var TasksDic = CreatTasksArrayWithExcel();
+        TasksDic.TryGetValue(id, out ret);
         return ret;
     }
  
-    static Dictionary<int, Tab_Itemp> ItempDic = null;
-    public static Dictionary<int, Tab_Itemp> CreatItempArrayWithExcel()
+    static Dictionary<int, Tab_TestItem> TestItemDic = null;
+    public static Dictionary<int, Tab_TestItem> CreatTestItemArrayWithExcel()
     {
-        if (ItempDic != null) return ItempDic;
-        ItempDic = new Dictionary<int, Tab_Itemp>();
-        string filePath = ExcelConfig.excelsFolderPath + "Itemp.xlsx";
+        if (TestItemDic != null) return TestItemDic;
+        TestItemDic = new Dictionary<int, Tab_TestItem>();
+        string filePath = ExcelConfig.excelsFolderPath + "TestItem.xlsx";
         int columnNum = 0, rowNum = 0;
         DataRowCollection collect = CreatTableClass.ReadExcel(filePath, ref columnNum, ref rowNum);
-        Tab_Itemp[] array = new Tab_Itemp[rowNum - 4];
+        Tab_TestItem[] array = new Tab_TestItem[rowNum - 4];
         for (int i = 4; i < rowNum; i++)
         {
-            Tab_Itemp Itemp = new Tab_Itemp();
-            Itemp.Id = int.Parse(collect[i][0].ToString());
-            Itemp.Name = collect[i][1].ToString();
-            Itemp.Price = int.Parse(collect[i][2].ToString());
-            Itemp.Count = int.Parse(collect[i][3].ToString());
-            ItempDic.Add(Itemp.Id, Itemp);
+            Tab_TestItem TestItem = new Tab_TestItem();
+            TestItem.Id = int.Parse(collect[i][0].ToString());
+            TestItem.Name = collect[i][1].ToString();
+            TestItem.Price = int.Parse(collect[i][2].ToString());
+            TestItemDic.Add(TestItem.Id, TestItem);
         }
-        return ItempDic;
+        return TestItemDic;
     }
   
-    public static Tab_Itemp GetItempById(int id)
+    public static Tab_TestItem GetTestItemById(int id)
     {
-        Tab_Itemp ret = null;
-        var ItempDic = CreatItempArrayWithExcel();
-        ItempDic.TryGetValue(id, out ret);
+        Tab_TestItem ret = null;
+        var TestItemDic = CreatTestItemArrayWithExcel();
+        TestItemDic.TryGetValue(id, out ret);
+        return ret;
+    }
+ 
+    static Dictionary<int, Tab_Scenes> ScenesDic = null;
+    public static Dictionary<int, Tab_Scenes> CreatScenesArrayWithExcel()
+    {
+        if (ScenesDic != null) return ScenesDic;
+        ScenesDic = new Dictionary<int, Tab_Scenes>();
+        string filePath = ExcelConfig.excelsFolderPath + "Scenes.xlsx";
+        int columnNum = 0, rowNum = 0;
+        DataRowCollection collect = CreatTableClass.ReadExcel(filePath, ref columnNum, ref rowNum);
+        Tab_Scenes[] array = new Tab_Scenes[rowNum - 4];
+        for (int i = 4; i < rowNum; i++)
+        {
+            Tab_Scenes Scenes = new Tab_Scenes();
+            Scenes.Id = int.Parse(collect[i][0].ToString());
+            Scenes.Name = collect[i][1].ToString();
+            Scenes.Icon = collect[i][2].ToString();
+            Scenes.LvL1 = int.Parse(collect[i][3].ToString());
+            Scenes.LvL2 = int.Parse(collect[i][4].ToString());
+            Scenes.LvL3 = int.Parse(collect[i][5].ToString());
+            ScenesDic.Add(Scenes.Id, Scenes);
+        }
+        return ScenesDic;
+    }
+  
+    public static Tab_Scenes GetScenesById(int id)
+    {
+        Tab_Scenes ret = null;
+        var ScenesDic = CreatScenesArrayWithExcel();
+        ScenesDic.TryGetValue(id, out ret);
         return ret;
     }
  
